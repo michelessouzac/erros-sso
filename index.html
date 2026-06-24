@@ -81,7 +81,6 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
             <div class="flex flex-col md:flex-row justify-between items-center gap-4">
                 <div class="flex items-center gap-3">
-                    <!-- Ícone Corporativo Minimalista -->
                     <div class="p-2.5 bg-se-blue rounded-lg shadow-inner flex items-center justify-center">
                         <i data-lucide="shield-check" class="w-6 h-6 text-white animate-pulse"></i>
                     </div>
@@ -107,7 +106,6 @@
         </div>
     </header>
 
-    <!-- CONTAINER PRINCIPAL -->
     <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
         
         <!-- CARD DE INTRODUÇÃO E HIGHLIGHT DE DOWNGRADE -->
@@ -118,7 +116,7 @@
                     Diagnóstico Operacional de SSO
                 </h2>
                 <p class="text-sm text-se-gray leading-relaxed">
-                    Este ecossistema interativo consolida as <strong>171 ocorrências de devoluções</strong> identificadas na planilha de auditoria. Navegue pelas seções para investigar as causas de retrabalho, analisar os gráficos de Pareto e acompanhar o progresso das ações preventivas estruturadas.
+                    Este ecossistema interativo consolida as <strong>171 ocorrências de devoluções</strong> identificadas na planilha de auditoria. Navegue pelas seções para investigar as causas de retrabalho, analisar a distribuição proporcional de erros de forma direta e acompanhar as ações preventivas acordadas.
                 </p>
             </div>
             <!-- Painel Alerta de Downgrade -->
@@ -182,8 +180,8 @@
         <div class="border-b border-se-border mb-8">
             <nav class="flex flex-wrap -mb-px gap-2" aria-label="Tabs">
                 <button onclick="switchTab('analytics')" id="tab-analytics" class="tab-btn px-5 py-3 border-b-2 border-se-blue font-bold text-sm text-se-blue flex items-center gap-2 transition-all">
-                    <i data-lucide="pie-chart" class="w-4 h-4"></i>
-                    Análise e Gráficos
+                    <i data-lucide="bar-chart-horizontal" class="w-4 h-4"></i>
+                    Análise de Inconsistências
                 </button>
                 <button onclick="switchTab('search')" id="tab-search" class="tab-btn px-5 py-3 border-b-2 border-transparent font-medium text-sm text-se-gray hover:text-se-dark hover:border-slate-300 flex items-center gap-2 transition-all">
                     <i data-lucide="search" class="w-4 h-4"></i>
@@ -199,71 +197,30 @@
         <!-- ABA 1: ANALYTICS -->
         <div id="content-analytics" class="tab-content active space-y-8">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                <!-- Painel Esquerdo: Distribuição Gráfica -->
-                <div class="bg-white rounded-xl border border-se-border p-6 shadow-sm lg:col-span-7 flex flex-col justify-between">
-                    <div class="mb-4">
-                        <h3 class="text-base font-bold text-se-dark flex items-center gap-2">
-                            <i data-lucide="bar-chart-3" class="w-5 h-5 text-se-blue"></i>
-                            Distribuição das Devoluções (Pareto)
-                        </h3>
-                        <p class="text-xs text-se-gray">Mapeamento percentual absoluto dos 171 itens identificados</p>
-                    </div>
-                    <div class="relative w-full h-[320px] mt-4">
-                        <canvas id="paretoChart"></canvas>
-                    </div>
-                </div>
-
-                <!-- Painel Direito: Tabela Resumo Rápido -->
-                <div class="bg-white rounded-xl border border-se-border p-6 shadow-sm lg:col-span-5 flex flex-col justify-between">
-                    <div>
-                        <h3 class="text-base font-bold text-se-dark flex items-center gap-2 mb-1">
-                            <i data-lucide="list-ordered" class="w-5 h-5 text-se-blue"></i>
-                            Maiores Detratores
-                        </h3>
-                        <p class="text-xs text-se-gray mb-4">Os principais motivos que geram devoluções e retrabalho</p>
+                <!-- Painel Esquerdo: Distribuição Gráfica Corrigida -->
+                <div class="bg-white rounded-xl border border-se-border p-6 shadow-sm lg:col-span-12 flex flex-col justify-between">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 border-b border-slate-100 pb-4">
+                        <div>
+                            <h3 class="text-base font-bold text-se-dark flex items-center gap-2">
+                                <i data-lucide="bar-chart-3" class="w-5 h-5 text-se-blue"></i>
+                                Distribuição de Ocorrências
+                            </h3>
+                            <p class="text-xs text-se-gray">Visualize os erros de preenchimento comparando quantidade absoluta versus representatividade percentual</p>
+                        </div>
                         
-                        <div class="space-y-4 max-h-[280px] overflow-y-auto pr-1">
-                            <!-- Item 1 -->
-                            <div class="flex items-center justify-between p-3 bg-se-lightBlue rounded-lg border border-blue-100">
-                                <div class="space-y-0.5">
-                                    <h4 class="text-xs font-bold text-se-dark">Falta de Clareza de Cenário</h4>
-                                    <p class="text-[10px] text-se-gray">Dúvidas, duplicidades e descrições vagas</p>
-                                </div>
-                                <div class="text-right">
-                                    <span class="text-sm font-bold text-se-blue">45 un</span>
-                                    <p class="text-[10px] text-se-gray">26,32%</p>
-                                </div>
-                            </div>
-                            <!-- Item 2 -->
-                            <div class="flex items-center justify-between p-3 bg-slate-50 rounded-lg border border-slate-200">
-                                <div class="space-y-0.5">
-                                    <h4 class="text-xs font-bold text-se-dark">Campos Obrigatórios em Branco</h4>
-                                    <p class="text-[10px] text-se-gray">Checkboxes de SLA, Licenças e Cloud</p>
-                                </div>
-                                <div class="text-right">
-                                    <span class="text-sm font-bold text-slate-700">30 un</span>
-                                    <p class="text-[10px] text-se-gray">17,54%</p>
-                                </div>
-                            </div>
-                            <!-- Item 3 -->
-                            <div class="flex items-center justify-between p-3 bg-slate-50 rounded-lg border border-slate-200">
-                                <div class="space-y-0.5">
-                                    <h4 class="text-xs font-bold text-se-dark">Problemas Formais com Proposta</h4>
-                                    <p class="text-[10px] text-se-gray">Falta de permissão de visualização e status</p>
-                                </div>
-                                <div class="text-right">
-                                    <span class="text-sm font-bold text-slate-700">20 un</span>
-                                    <p class="text-[10px] text-se-gray">11,70%</p>
-                                </div>
-                            </div>
+                        <!-- Alternador Dinâmico de Métrica -->
+                        <div class="inline-flex bg-slate-100 p-1 rounded-lg border border-slate-200 self-end sm:self-auto">
+                            <button onclick="changeMetric('qty')" id="btn-metric-qty" class="px-4 py-1.5 text-xs font-bold rounded-md bg-white text-se-blue shadow-sm transition-all duration-300">
+                                Quantidade (un)
+                            </button>
+                            <button onclick="changeMetric('pct')" id="btn-metric-pct" class="px-4 py-1.5 text-xs font-medium rounded-md text-se-gray hover:text-se-dark transition-all duration-300">
+                                Percentual (%)
+                            </button>
                         </div>
                     </div>
                     
-                    <div class="mt-4 pt-4 border-t border-se-border flex justify-between items-center text-xs">
-                        <span class="text-se-gray font-medium">Precisão dos dados garantida</span>
-                        <span class="text-se-success font-semibold flex items-center gap-1">
-                            <i data-lucide="check-circle" class="w-4 h-4"></i> 100% Auditados
-                        </span>
+                    <div class="relative w-full h-[480px]">
+                        <canvas id="distributionChart"></canvas>
                     </div>
                 </div>
             </div>
@@ -271,7 +228,6 @@
 
         <!-- ABA 2: PESQUISA E EXPLORADOR -->
         <div id="content-search" class="tab-content space-y-6">
-            <!-- Barra de Busca -->
             <div class="bg-white rounded-xl border border-se-border p-5 shadow-sm space-y-4">
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div class="space-y-1">
@@ -281,7 +237,6 @@
                         </h3>
                         <p class="text-xs text-se-gray">Pesquise por qualquer palavra ou categoria exata da planilha para ver os números reais</p>
                     </div>
-                    <!-- Campo de Busca -->
                     <div class="relative w-full md:w-80">
                         <input type="text" id="searchInput" oninput="filterErrors()" placeholder="Buscar erro, número ou impacto..." class="w-full pl-10 pr-4 py-2 border border-se-border rounded-lg text-sm focus:outline-none focus:border-se-blue focus:ring-1 focus:ring-se-blue transition-all">
                         <div class="absolute left-3 top-2.5 text-slate-400">
@@ -291,7 +246,6 @@
                 </div>
             </div>
 
-            <!-- Grid de Cards de Resultados -->
             <div id="errorGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- Gerado dinamicamente via Javascript -->
             </div>
@@ -308,7 +262,6 @@
                         </h3>
                         <p class="text-xs text-se-gray">Monitore e gerencie os pilares de otimização de preenchimento definidos para as áreas envolvidas</p>
                     </div>
-                    <!-- Barra de progresso interativa -->
                     <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 w-full md:w-64 space-y-2 flex flex-col justify-center">
                         <div class="flex justify-between items-center text-xs">
                             <span class="font-bold text-se-dark">Progresso das Ações</span>
@@ -413,7 +366,7 @@
     <!-- NOTIFICAÇÃO DE SUCESSO CUSTOMIZADA -->
     <div id="toast" class="fixed bottom-5 right-5 bg-se-dark text-white text-xs px-4 py-3 rounded-xl border border-se-blue shadow-2xl flex items-center gap-2 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
         <i data-lucide="check-circle" class="w-4 h-4 text-se-success"></i>
-        <span id="toast-msg">Plano atualizado com sucesso!</span>
+        <span id="toast-msg">Plano de ação atualizado!</span>
     </div>
 
     <!-- FOOTER -->
@@ -430,32 +383,29 @@
     <script>
         // Dados Exatos e Reais da Planilha Jan-Maio/2026
         const rawErrors = [
-            { id: 1, title: "Falta de Clareza de Cenário / Inconsistências Gerais", qty: 45, pct: "26,32%", desc: "SSOs abertos com duplicidade, falta de histórico de conversão, ou sem detalhar o cenário proposto vs. cenário atual do cliente.", class: "Crítico" },
-            { id: 2, title: "Campos Obrigatórios em Branco no Formulário SSO", qty: 30, pct: "17,54%", desc: "Omissão de checkboxes cruciais como SLA, Servidor de E-mail, Licenças, Cloud e recursos de vendas deixados vazios.", class: "Atenção" },
-            { id: 3, title: "Problemas Formais com a Proposta Comercial", qty: 20, pct: "11,70%", desc: "Dificuldades no acesso ao anexo comercial por falta de permissão de visualização ou uso de formato inadequado.", class: "Atenção" },
-            { id: 4, title: "Divergências entre Proposta e Price Builder / Ordem de Compra", qty: 15, pct: "8,77%", desc: "Valores finais, perfis de licenças ou quantidade de usuários conflitantes entre os documentos integradores.", class: "Atenção" },
-            { id: 5, title: "Ausência de Proposta Comercial ou Proposta em Branco", qty: 15, pct: "8,77%", desc: "Abertura de solicitações sem anexar o documento de oferta que dá sustentação jurídica e financeira ao faturamento.", class: "Atenção" },
-            { id: 6, title: "Falta de Concessão Comercial (Descontos / Parcelamentos)", qty: 12, pct: "7,02%", desc: "Aplicações de parcelamentos estendidos ou percentuais de desconto sem aprovação formal associada da respectiva alçada.", class: "Processual" },
-            { id: 7, title: "Falta de Cobrança da Taxa Administrativa (Downgrade)", qty: 8, pct: "4,68%", desc: "Processamento de reduções sem o lançamento da taxa administrativa de downgrade obrigatória pelo regimento interno.", class: "Processual" },
-            { id: 8, title: "Campo Downgrade não Preenchido ou Incorreto", qty: 8, pct: "4,68%", desc: "Incoerência nas caixas de faturamento de redução de escopo contratual ou faturamento retroativo incorreto.", class: "Atenção" },
-            { id: 9, title: "Falta de Aceite Formal do Cliente", qty: 5, pct: "2,92%", desc: "Falta da evidência de aceite formal ou assinatura que legalize a liberação dos serviços na SoftExpert.", class: "Compliance" },
-            { id: 10, title: "Solicitações Específicas do Gestor / Área Jurídica", qty: 5, pct: "2,92%", desc: "Ajustes de faturamento ou correções específicas requisitadas pela equipe de suporte processual ou jurídica da empresa.", class: "Compliance" },
-            { id: 11, title: "Erros de Precificação / Divergências em Cloud e Hosting", qty: 3, pct: "1,75%", desc: "Quantidades incorretas na ferramenta Price Builder inferiores à quantidade contratual mínima negociada.", class: "Financeiro" },
-            { id: 12, title: "Proposta com Status Incorreto (ex: 'Em Emissão')", qty: 3, pct: "1,75%", desc: "Enquadramento da proposta em status de rascunho ou emissão quando o correto seria homologado.", class: "Processual" },
-            { id: 13, title: "Divergências de Informações Diversas (Parceiro vs Cliente)", qty: 2, pct: "1,17%", desc: "Dúvidas no faturamento devido a múltiplos CNPJs ou preenchimento inconsistente de quem pagará.", class: "Financeiro" }
+            { id: 1, title: "Falta de Clareza de Cenário / Inconsistências Gerais", qty: 45, pct: 26.32, desc: "SSOs abertos com duplicidade, falta de histórico de conversão, ou sem detalhar o cenário proposto vs. cenário atual do cliente.", class: "Crítico" },
+            { id: 2, title: "Campos Obrigatórios em Branco no Formulário SSO", qty: 30, pct: 17.54, desc: "Omissão de checkboxes cruciais como SLA, Servidor de E-mail, Licenças, Cloud e recursos de vendas deixados vazios.", class: "Atenção" },
+            { id: 3, title: "Problemas Formais com a Proposta Comercial", qty: 20, pct: 11.70, desc: "Dificuldades no acesso ao anexo comercial por falta de permissão de visualização ou uso de formato inadequado.", class: "Atenção" },
+            { id: 4, title: "Divergências entre Proposta e Price Builder / Ordem de Compra", qty: 15, pct: 8.77, desc: "Valores finais, perfis de licenças ou quantidade de usuários conflitantes entre os documentos integradores.", class: "Atenção" },
+            { id: 5, title: "Ausência de Proposta Comercial ou Proposta em Branco", qty: 15, pct: 8.77, desc: "Abertura de solicitações sem anexar o documento de oferta que dá segurança de faturamento.", class: "Atenção" },
+            { id: 6, title: "Falta de Concessão Comercial (Descontos / Parcelamentos)", qty: 12, pct: 7.02, desc: "Aplicações de faturamentos de prazos estendidos ou percentuais de desconto sem aprovação formal associada.", class: "Processual" },
+            { id: 7, title: "Falta de Cobrança da Taxa Administrativa (Downgrade)", qty: 8, pct: 4.68, desc: "Processamento de reduções sem o lançamento da taxa administrativa de downgrade obrigatória pelo regimento interno.", class: "Processual" },
+            { id: 8, title: "Campo Downgrade não Preenchido ou Incorreto", qty: 8, pct: 4.68, desc: "Incoerência nas caixas de faturamento de redução de escopo contratual ou faturamento retroativo incorreto.", class: "Atenção" },
+            { id: 9, title: "Falta de Aceite Formal do Cliente", qty: 5, pct: 2.92, desc: "Falta da evidência de aceite formal ou assinatura que legalize a liberação dos serviços na SoftExpert.", class: "Compliance" },
+            { id: 10, title: "Solicitações Específicas do Gestor / Área Jurídica", qty: 5, pct: 2.92, desc: "Ajustes de faturamento ou correções específicas requisitadas pela equipe de suporte processual ou jurídica.", class: "Compliance" },
+            { id: 11, title: "Erros de Precificação / Divergências em Cloud e Hosting", qty: 3, pct: 1.75, desc: "Quantidades incorretas na ferramenta Price Builder inferiores à quantidade contratual mínima negociada.", class: "Financeiro" },
+            { id: 12, title: "Proposta com Status Incorreto (ex: 'Em Emissão')", qty: 3, pct: 1.75, desc: "Enquadramento da proposta indevidamente em emissão quando deveria estar homologada no sistema.", class: "Processual" },
+            { id: 13, title: "Divergências de Informações Diversas (Parceiro vs Cliente)", qty: 2, pct: 1.17, desc: "Dúvidas no faturamento devido a múltiplos CNPJs ou preenchimento inconsistente de quem pagará.", class: "Financeiro" }
         ];
 
-        // Estado do Plano de Ação
+        // Estado Global da Aplicação
+        let activeMetric = 'qty'; // 'qty' ou 'pct'
+        let chartInstance = null;
         let checkedActions = { 1: false, 2: false, 3: false, 4: false };
 
         window.onload = function() {
-            // Inicializar Lucide Icons
             lucide.createIcons();
-            
-            // Renderizar Gráfico
-            renderChart();
-            
-            // Carregar os cards no Explorador
+            renderDistributionChart();
             renderErrorCards(rawErrors);
         }
 
@@ -474,103 +424,100 @@
             activeBtn.classList.add('border-se-blue', 'text-se-blue', 'font-bold');
 
             document.getElementById(`content-${tabId}`).classList.add('active');
+            
+            // Recria o gráfico se a aba de analytics for selecionada para evitar bugs de tamanho
+            if (tabId === 'analytics') {
+                setTimeout(renderDistributionChart, 50);
+            }
         }
 
-        // Renderizador do Gráfico de Pareto (Chart.js)
-        function renderChart() {
-            const ctx = document.getElementById('paretoChart').getContext('2d');
+        // Alternador dinâmico de métrica (Quantidade vs Percentual)
+        function changeMetric(metric) {
+            activeMetric = metric;
             
-            // Ordenar por volume para Pareto verdadeiro
-            const sortedData = [...rawErrors].sort((a, b) => b.qty - a.qty);
-            const labels = sortedData.map(item => item.title.substring(0, 25) + '...');
-            const values = sortedData.map(item => item.qty);
+            // Ajustar estilos dos botões do seletor
+            const btnQty = document.getElementById('btn-metric-qty');
+            const btnPct = document.getElementById('btn-metric-pct');
             
-            // Gerar porcentagem acumulada
-            const total = values.reduce((acc, curr) => acc + curr, 0);
-            let runningSum = 0;
-            const accumPct = values.map(val => {
-                runningSum += val;
-                return ((runningSum / total) * 100).toFixed(1);
-            });
+            if (metric === 'qty') {
+                btnQty.className = "px-4 py-1.5 text-xs font-bold rounded-md bg-white text-se-blue shadow-sm transition-all duration-300";
+                btnPct.className = "px-4 py-1.5 text-xs font-medium rounded-md text-se-gray hover:text-se-dark transition-all duration-300";
+            } else {
+                btnQty.className = "px-4 py-1.5 text-xs font-medium rounded-md text-se-gray hover:text-se-dark transition-all duration-300";
+                btnPct.className = "px-4 py-1.5 text-xs font-bold rounded-md bg-white text-se-blue shadow-sm transition-all duration-300";
+            }
+            
+            renderDistributionChart();
+        }
 
-            new Chart(ctx, {
+        // Renderiza o gráfico Horizontal Simples e Direto
+        function renderDistributionChart() {
+            const ctx = document.getElementById('distributionChart').getContext('2d');
+            
+            if (chartInstance) {
+                chartInstance.destroy();
+            }
+
+            // Ordenar por volume
+            const sortedData = [...rawErrors].sort((a, b) => b.qty - a.qty);
+            const labels = sortedData.map(item => item.title);
+            
+            const dataValues = sortedData.map(item => activeMetric === 'qty' ? item.qty : item.pct);
+            const metricLabel = activeMetric === 'qty' ? 'Quantidade (unidades)' : 'Representatividade (%)';
+
+            chartInstance = new Chart(ctx, {
                 type: 'bar',
                 data: {
                     labels: labels,
-                    datasets: [
-                        {
-                            label: 'Quantidade de Ocorrências (Jan-Maio)',
-                            data: values,
-                            backgroundColor: '#0056B3',
-                            borderColor: '#004085',
-                            borderWidth: 1,
-                            borderRadius: 6,
-                            order: 2,
-                            yAxisID: 'y'
-                        },
-                        {
-                            label: '% Acumulada',
-                            data: accumPct,
-                            type: 'line',
-                            borderColor: '#F59E0B',
-                            backgroundColor: 'transparent',
-                            borderWidth: 2,
-                            pointBackgroundColor: '#F59E0B',
-                            tension: 0.1,
-                            order: 1,
-                            yAxisID: 'yAccum'
-                        }
-                    ]
+                    datasets: [{
+                        label: metricLabel,
+                        data: dataValues,
+                        backgroundColor: '#0056B3',
+                        hoverBackgroundColor: '#1071E5',
+                        borderColor: '#004085',
+                        borderWidth: 1,
+                        borderRadius: 4,
+                        barThickness: 16
+                    }]
                 },
                 options: {
+                    indexAxis: 'y', // Define o gráfico como horizontal para legibilidade perfeita
                     responsive: true,
                     maintainAspectRatio: false,
                     plugins: {
                         legend: {
-                            position: 'top',
-                            labels: {
-                                font: {
-                                    family: 'Plus Jakarta Sans',
-                                    size: 10,
-                                    weight: '500'
-                                },
-                                color: '#1E293B'
-                            }
+                            display: false // Dispensa legenda pois o título do eixo já é claro
                         },
                         tooltip: {
                             titleFont: { family: 'Plus Jakarta Sans', size: 11, weight: 'bold' },
-                            bodyFont: { family: 'Plus Jakarta Sans', size: 10 }
+                            bodyFont: { family: 'Plus Jakarta Sans', size: 11 },
+                            callbacks: {
+                                label: function(context) {
+                                    const index = context.dataIndex;
+                                    const item = sortedData[index];
+                                    return ` Quantidade: ${item.qty} un  |  Proporção: ${item.pct.toFixed(2)}%`;
+                                }
+                            }
                         }
                     },
                     scales: {
                         x: {
-                            grid: { display: false },
+                            beginAtZero: true,
+                            grid: { color: '#F1F5F9' },
                             ticks: {
                                 color: '#64748B',
-                                font: { family: 'Plus Jakarta Sans', size: 8 }
+                                font: { family: 'Plus Jakarta Sans', size: 10 },
+                                callback: function(value) {
+                                    return activeMetric === 'qty' ? value : value + "%";
+                                }
                             }
                         },
                         y: {
-                            type: 'linear',
-                            position: 'left',
-                            beginAtZero: true,
+                            grid: { display: false },
                             ticks: {
-                                color: '#64748B',
-                                font: { family: 'Plus Jakarta Sans', size: 9 }
-                            },
-                            grid: { color: '#E2E8F0' }
-                        },
-                        yAccum: {
-                            type: 'linear',
-                            position: 'right',
-                            beginAtZero: true,
-                            max: 100,
-                            ticks: {
-                                color: '#F59E0B',
-                                font: { family: 'Plus Jakarta Sans', size: 9 },
-                                callback: function(value) { return value + "%"; }
-                            },
-                            grid: { display: false }
+                                color: '#1E293B',
+                                font: { family: 'Plus Jakarta Sans', size: 10, weight: '500' }
+                            }
                         }
                     }
                 }
@@ -604,7 +551,7 @@
                     <div class="space-y-3">
                         <div class="flex justify-between items-start gap-2">
                             <span class="text-[9px] font-bold px-2 py-0.5 rounded-full ${badgeColor} uppercase tracking-wider">${item.class}</span>
-                            <span class="text-sm font-black text-se-blue">${item.qty} un <span class="text-[10px] font-medium text-se-gray">(${item.pct})</span></span>
+                            <span class="text-sm font-black text-se-blue">${item.qty} un <span class="text-[10px] font-medium text-se-gray">(${item.pct.toFixed(2)}%)</span></span>
                         </div>
                         <h4 class="text-sm font-bold text-se-dark leading-snug">${item.title}</h4>
                         <p class="text-xs text-se-gray leading-relaxed">${item.desc}</p>
@@ -643,15 +590,12 @@
                 card.classList.add('bg-slate-50', 'border-slate-200');
             }
 
-            // Calcular novas métricas de progresso
             const checkedCount = Object.values(checkedActions).filter(val => val).length;
             const pct = (checkedCount / 4) * 100;
             
-            // Atualizar barra de progresso
             document.getElementById('progressBar').style.width = `${pct}%`;
             document.getElementById('progressText').innerText = `${checkedCount} / 4 (${pct}%)`;
 
-            // Toast de Feedback
             showToast(`Plano de ação atualizado! Progresso: ${pct}%`);
         }
 
