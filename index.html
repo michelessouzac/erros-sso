@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoftExpert | Dashboard Analítico de SSO</title>
+    
+    <!-- Google Fonts - Plus Jakarta Sans (Premium & Corporativo) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS para design ágil e responsivo -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Chart.js para gráficos interativos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Lucide Icons para iconografia limpa -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        se: {
+                            dark: '#0B1329',      // Slate Dark da SoftExpert
+                            blue: '#0056B3',      // Azul SoftExpert Oficial
+                            lightBlue: '#F0F7FF', // Azul de Destaque Suave
+                            accent: '#1071E5',    // Azul Elétrico de Ação
+                            gray: '#64748B',      // Cinza de apoio
+                            border: '#E2E8F0',    // Cinza de borda
+                            success: '#10B981',   // Verde de Conformidade
+                            warning: '#F59E0B'    // Âmbar de Alerta
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Transições suaves e efeitos de scroll refinados */
+        .tab-content {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        .tab-content.active {
+            display: block;
+            opacity: 1;
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F1F5F9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #CBD5E1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94A3B8;
+        }
+        .card-glow:hover {
+            box-shadow: 0 10px 25px -5px rgba(0, 86, 179, 0.1), 0 8px 10px -6px rgba(0, 86, 179, 0.05);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="bg-[#F8FAFC] text-slate-800 font-sans min-h-screen flex flex-col">
+
+    <!-- HEADER INSTITUCIONAL SOFTEXTPERT -->
+    <header class="bg-se-dark text-white border-b border-se-blue shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="flex items-center gap-3">
+                    <!-- Ícone Corporativo Minimalista -->
+                    <div class="p-2.5 bg-se-blue rounded-lg shadow-inner flex items-center justify-center">
+                        <i data-lucide="shield-check" class="w-6 h-6 text-white animate-pulse"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-bold tracking-widest text-se-accent uppercase">SoftExpert Excellence</span>
+                            <span class="text-[10px] bg-se-blue text-white px-2 py-0.5 rounded-full font-semibold">Sales Ops</span>
+                        </div>
+                        <h1 class="text-xl md:text-2xl font-extrabold tracking-tight">Inconsistências em SSO</h1>
+                    </div>
+                </div>
+                <!-- Assinatura Michele Cezar -->
+                <div class="text-center md:text-right">
+                    <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-white/10 rounded-full border border-white/15">
+                        <span class="w-2 h-2 rounded-full bg-se-success"></span>
+                        <p class="text-xs font-medium text-slate-200">
+                            Material criado por <strong class="text-white">Michele Cezar | Sales Ops</strong>
+                        </p>
+                    </div>
+                    <p class="text-[11px] text-slate-400 mt-1">Análise de Devoluções • Janeiro a Maio de 2026</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- CONTAINER PRINCIPAL -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+        <!-- CARD DE INTRODUÇÃO E HIGHLIGHT DE DOWNGRADE -->
+        <div class="bg-white rounded-2xl border border-se-border p-6 mb-8 shadow-sm flex flex-col lg:flex-row lg:items-center justify-between gap-6 transition-all duration-300">
+            <div class="space-y-2 max-w-3xl">
+                <h2 class="text-lg font-bold text-se-dark flex items-center gap-2">
+                    <i data-lucide="info" class="w-5 h-5 text-se-blue"></i>
+                    Diagnóstico Operacional de SSO
+                </h2>
+                <p class="text-sm text-se-gray leading-relaxed">
+                    Este ecossistema interativo consolida as <strong>171 ocorrências de devoluções</strong> identificadas na planilha de auditoria. Navegue pelas seções para investigar as causas de retrabalho, analisar os gráficos de Pareto e acompanhar o progresso das ações preventivas estruturadas.
+                </p>
+            </div>
+            <!-- Painel Alerta de Downgrade -->
+            <div class="bg-red-50 border border-red-200 rounded-xl p-4 flex items-start gap-3 lg:max-w-sm shrink-0">
+                <div class="p-1.5 bg-red-100 rounded-lg text-red-600">
+                    <i data-lucide="trending-down" class="w-5 h-5"></i>
+                </div>
+                <div class="space-y-1">
+                    <h3 class="text-xs font-bold text-red-800 uppercase tracking-wider">Foco Crítico: Downgrades</h3>
+                    <p class="text-xs text-red-700 leading-snug">
+                        Somando a falta da Taxa Administrativa (<strong class="text-red-900">8</strong>) e erros diretos nos campos (<strong class="text-red-900">8</strong>), o processo de Downgrade responde por <strong class="text-red-900">9,36%</strong> das devoluções.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SEÇÃO DE INDICADORES (KPI CARDS) -->
+        <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            <!-- KPI 1 -->
+            <div class="bg-white rounded-xl border border-se-border p-6 shadow-sm card-glow transition-all duration-300 flex items-center justify-between">
+                <div class="space-y-1">
+                    <span class="text-xs font-bold text-se-gray uppercase tracking-wider">Total de Devoluções</span>
+                    <p class="text-3xl font-extrabold text-se-dark" id="kpi-total">171</p>
+                    <p class="text-xs text-se-success flex items-center gap-1">
+                        <i data-lucide="activity" class="w-3.5 h-3.5"></i> Período: Jan - Maio / 2026
+                    </p>
+                </div>
+                <div class="p-4 bg-se-lightBlue rounded-xl text-se-blue">
+                    <i data-lucide="archive" class="w-6 h-6"></i>
+                </div>
+            </div>
+            <!-- KPI 2 -->
+            <div class="bg-white rounded-xl border border-se-border p-6 shadow-sm card-glow transition-all duration-300 flex items-center justify-between">
+                <div class="space-y-1">
+                    <span class="text-xs font-bold text-se-gray uppercase tracking-wider">Campos em Branco</span>
+                    <p class="text-3xl font-extrabold text-se-dark" id="kpi-empty">30</p>
+                    <p class="text-xs text-se-warning flex items-center gap-1">
+                        <i data-lucide="alert-triangle" class="w-3.5 h-3.5"></i> Representa 17,54% do total
+                    </p>
+                </div>
+                <div class="p-4 bg-amber-50 rounded-xl text-se-warning">
+                    <i data-lucide="file-warning" class="w-6 h-6"></i>
+                </div>
+            </div>
+            <!-- KPI 3 -->
+            <div class="bg-white rounded-xl border border-se-border p-6 shadow-sm card-glow transition-all duration-300 flex items-center justify-between sm:col-span-2 lg:col-span-1">
+                <div class="space-y-1">
+                    <span class="text-xs font-bold text-se-gray uppercase tracking-wider">Erros de Downgrade</span>
+                    <p class="text-3xl font-extrabold text-se-dark">16</p>
+                    <p class="text-xs text-red-500 flex items-center gap-1">
+                        <i data-lucide="shield-alert" class="w-3.5 h-3.5"></i> Impacto financeiro e processual
+                    </p>
+                </div>
+                <div class="p-4 bg-red-50 rounded-xl text-red-500">
+                    <i data-lucide="arrow-down-right" class="w-6 h-6"></i>
+                </div>
+            </div>
+        </section>
+
+        <!-- ABAS DE NAVEGAÇÃO INTERATIVA -->
+        <div class="border-b border-se-border mb-8">
+            <nav class="flex flex-wrap -mb-px gap-2" aria-label="Tabs">
+                <button onclick="switchTab('analytics')" id="tab-analytics" class="tab-btn px-5 py-3 border-b-2 border-se-blue font-bold text-sm text-se-blue flex items-center gap-2 transition-all">
+                    <i data-lucide="pie-chart" class="w-4 h-4"></i>
+                    Análise e Gráficos
+                </button>
+                <button onclick="switchTab('search')" id="tab-search" class="tab-btn px-5 py-3 border-b-2 border-transparent font-medium text-sm text-se-gray hover:text-se-dark hover:border-slate-300 flex items-center gap-2 transition-all">
+                    <i data-lucide="search" class="w-4 h-4"></i>
+                    Explorador de Ocorrências
+                </button>
+                <button onclick="switchTab('action')" id="tab-action" class="tab-btn px-5 py-3 border-b-2 border-transparent font-medium text-sm text-se-gray hover:text-se-dark hover:border-slate-300 flex items-center gap-2 transition-all">
+                    <i data-lucide="check-square" class="w-4 h-4"></i>
+                    Plano de Ação Estratégico
+                </button>
+            </nav>
+        </div>
+
+        <!-- ABA 1: ANALYTICS -->
+        <div id="content-analytics" class="tab-content active space-y-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <!-- Painel Esquerdo: Distribuição Gráfica -->
+                <div class="bg-white rounded-xl border border-se-border p-6 shadow-sm lg:col-span-7 flex flex-col justify-between">
+                    <div class="mb-4">
+                        <h3 class="text-base font-bold text-se-dark flex items-center gap-2">
+                            <i data-lucide="bar-chart-3" class="w-5 h-5 text-se-blue"></i>
+                            Distribuição das Devoluções (Pareto)
+                        </h3>
+                        <p class="text-xs text-se-gray">Mapeamento percentual absoluto dos 171 itens identificados</p>
+                    </div>
+                    <div class="relative w-full h-[320px] mt-4">
+                        <canvas id="paretoChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Painel Direito: Tabela Resumo Rápido -->
+                <div class="bg-white rounded-xl border border-se-border p-6 shadow-sm lg:col-span-5 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-base font-bold text-se-dark flex items-center gap-2 mb-1">
+                            <i data-lucide="list-ordered" class="w-5 h-5 text-se-blue"></i>
+                            Maiores Detratores
+                        </h3>
+                        <p class="text-xs text-se-gray mb-4">Os principais motivos que geram devoluções e retrabalho</p>
+                        
+                        <div class="space-y-4 max-h-[280px] overflow-y-auto pr-1">
+                            <!-- Item 1 -->
+                            <div class="flex items-center justify-between p-3 bg-se-lightBlue rounded-lg border border-blue-100">
+                                <div class="space-y-0.5">
+                                    <h4 class="text-xs font-bold text-se-dark">Falta de Clareza de Cenário</h4>
+                                    <p class="text-[10px] text-se-gray">Dúvidas, duplicidades e descrições vagas</p>
+                                </div>
+                                <div class="text-right">
+                                    <span class="text-sm font-bold text-se-blue">45 un</span>
+                                    <p class="text-[10px] text-se-gray">26,32%</p>
+                                </div>
+                            </div>
+                            <!-- Item 2 -->
+                            <div class="flex items-center justify-between p-3 bg-slate-50 rounded-lg border border-slate-200">
+                                <div class="space-y-0.5">
+                                    <h4 class="text-xs font-bold text-se-dark">Campos Obrigatórios em Branco</h4>
+                                    <p class="text-[10px] text-se-gray">Checkboxes de SLA, Licenças e Cloud</p>
+                                </div>
+                                <div class="text-right">
+                                    <span class="text-sm font-bold text-slate-700">30 un</span>
+                                    <p class="text-[10px] text-se-gray">17,54%</p>
+                                </div>
+                            </div>
+                            <!-- Item 3 -->
+                            <div class="flex items-center justify-between p-3 bg-slate-50 rounded-lg border border-slate-200">
+                                <div class="space-y-0.5">
+                                    <h4 class="text-xs font-bold text-se-dark">Problemas Formais com Proposta</h4>
+                                    <p class="text-[10px] text-se-gray">Falta de permissão de visualização e status</p>
+                                </div>
+                                <div class="text-right">
+                                    <span class="text-sm font-bold text-slate-700">20 un</span>
+                                    <p class="text-[10px] text-se-gray">11,70%</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4 pt-4 border-t border-se-border flex justify-between items-center text-xs">
+                        <span class="text-se-gray font-medium">Precisão dos dados garantida</span>
+                        <span class="text-se-success font-semibold flex items-center gap-1">
+                            <i data-lucide="check-circle" class="w-4 h-4"></i> 100% Auditados
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ABA 2: PESQUISA E EXPLORADOR -->
+        <div id="content-search" class="tab-content space-y-6">
+            <!-- Barra de Busca -->
+            <div class="bg-white rounded-xl border border-se-border p-5 shadow-sm space-y-4">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div class="space-y-1">
+                        <h3 class="text-base font-bold text-se-dark flex items-center gap-2">
+                            <i data-lucide="folder-search" class="w-5 h-5 text-se-blue"></i>
+                            Filtrar Categorias e Erros
+                        </h3>
+                        <p class="text-xs text-se-gray">Pesquise por qualquer palavra ou categoria exata da planilha para ver os números reais</p>
+                    </div>
+                    <!-- Campo de Busca -->
+                    <div class="relative w-full md:w-80">
+                        <input type="text" id="searchInput" oninput="filterErrors()" placeholder="Buscar erro, número ou impacto..." class="w-full pl-10 pr-4 py-2 border border-se-border rounded-lg text-sm focus:outline-none focus:border-se-blue focus:ring-1 focus:ring-se-blue transition-all">
+                        <div class="absolute left-3 top-2.5 text-slate-400">
+                            <i data-lucide="search" class="w-4.5 h-4.5"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Grid de Cards de Resultados -->
+            <div id="errorGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Gerado dinamicamente via Javascript -->
+            </div>
+        </div>
+
+        <!-- ABA 3: PLANO DE AÇÃO E GOVERNANÇA -->
+        <div id="content-action" class="tab-content space-y-6">
+            <div class="bg-white rounded-xl border border-se-border p-6 shadow-sm">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-se-border pb-6 mb-6">
+                    <div class="space-y-1">
+                        <h3 class="text-lg font-bold text-se-dark flex items-center gap-2">
+                            <i data-lucide="check-square" class="w-5 h-5 text-se-blue"></i>
+                            Plano de Ação Estratégico & Governança
+                        </h3>
+                        <p class="text-xs text-se-gray">Monitore e gerencie os pilares de otimização de preenchimento definidos para as áreas envolvidas</p>
+                    </div>
+                    <!-- Barra de progresso interativa -->
+                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 w-full md:w-64 space-y-2 flex flex-col justify-center">
+                        <div class="flex justify-between items-center text-xs">
+                            <span class="font-bold text-se-dark">Progresso das Ações</span>
+                            <span class="font-extrabold text-se-blue" id="progressText">0 / 4 (0%)</span>
+                        </div>
+                        <div class="w-full bg-slate-200 rounded-full h-2 overflow-hidden">
+                            <div class="bg-se-blue h-2 rounded-full transition-all duration-500" id="progressBar" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lista de Ações Interativas -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Ação 1 -->
+                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-5 hover:border-se-blue transition-all duration-300 flex flex-col justify-between" id="action-card-1">
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-start">
+                                <span class="text-[10px] bg-red-100 text-red-800 font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">Ação 1 - Alta Prioridade</span>
+                                <input type="checkbox" onchange="toggleAction(1)" class="w-5 h-5 rounded text-se-blue border-se-border focus:ring-se-blue cursor-pointer transition-all">
+                            </div>
+                            <h4 class="text-sm font-bold text-se-dark">Automatização de Campos no CRM / Form</h4>
+                            <p class="text-xs text-se-gray leading-relaxed">
+                                Tornar obrigatório o preenchimento de checkboxes de validação (SLA, Licenças, Cloud) e travar o envio do SSO caso o ID do CRM ou País estejam vazios.
+                            </p>
+                        </div>
+                        <div class="flex justify-between items-center mt-4 pt-4 border-t border-slate-200">
+                            <div class="flex items-center gap-1.5 text-xs text-se-gray">
+                                <i data-lucide="user" class="w-4 h-4"></i>
+                                <span>Responsável: <strong class="text-se-dark">DTM</strong></span>
+                            </div>
+                            <span class="text-[10px] bg-se-lightBlue text-se-blue px-2 py-0.5 rounded font-bold uppercase tracking-wider">Sistêmico</span>
+                        </div>
+                    </div>
+
+                    <!-- Ação 2 -->
+                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-5 hover:border-se-blue transition-all duration-300 flex flex-col justify-between" id="action-card-2">
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-start">
+                                <span class="text-[10px] bg-red-100 text-red-800 font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">Ação 2 - Alta Prioridade</span>
+                                <input type="checkbox" onchange="toggleAction(2)" class="w-5 h-5 rounded text-se-blue border-se-border focus:ring-se-blue cursor-pointer transition-all">
+                            </div>
+                            <h4 class="text-sm font-bold text-se-dark">Trava Sistêmica para Downgrade</h4>
+                            <p class="text-xs text-se-gray leading-relaxed">
+                                Condicionar a abertura de SSOs classificados como Downgrade à inclusão obrigatória do item de taxa administrativa ou anexo de concessão comercial aprovada.
+                            </p>
+                        </div>
+                        <div class="flex justify-between items-center mt-4 pt-4 border-t border-slate-200">
+                            <div class="flex items-center gap-1.5 text-xs text-se-gray">
+                                <i data-lucide="user" class="w-4 h-4"></i>
+                                <span>Responsável: <strong class="text-se-dark">DTM</strong></span>
+                            </div>
+                            <span class="text-[10px] bg-se-lightBlue text-se-blue px-2 py-0.5 rounded font-bold uppercase tracking-wider">Sistêmico</span>
+                        </div>
+                    </div>
+
+                    <!-- Ação 3 -->
+                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-5 hover:border-se-blue transition-all duration-300 flex flex-col justify-between" id="action-card-3">
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-start">
+                                <span class="text-[10px] bg-amber-100 text-amber-800 font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">Ação 3 - Média Prioridade</span>
+                                <input type="checkbox" onchange="toggleAction(3)" class="w-5 h-5 rounded text-se-blue border-se-border focus:ring-se-blue cursor-pointer transition-all">
+                            </div>
+                            <h4 class="text-sm font-bold text-se-dark">Checklist de Pré-envio</h4>
+                            <p class="text-xs text-se-gray leading-relaxed">
+                                Elaborar um guia visual rápido (Pílula de Conhecimento) para os Executivos de Vendas validarem o status da proposta comercial e permissões antes de submeter o SSO.
+                            </p>
+                        </div>
+                        <div class="flex justify-between items-center mt-4 pt-4 border-t border-slate-200">
+                            <div class="flex items-center gap-1.5 text-xs text-se-gray">
+                                <i data-lucide="user" class="w-4 h-4"></i>
+                                <span>Responsável: <strong class="text-se-dark">Sales Ops</strong></span>
+                            </div>
+                            <span class="text-[10px] bg-purple-50 text-purple-700 px-2 py-0.5 rounded font-bold uppercase tracking-wider">Treinamento</span>
+                        </div>
+                    </div>
+
+                    <!-- Ação 4 -->
+                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-5 hover:border-se-blue transition-all duration-300 flex flex-col justify-between" id="action-card-4">
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-start">
+                                <span class="text-[10px] bg-amber-100 text-amber-800 font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">Ação 4 - Média Prioridade</span>
+                                <input type="checkbox" onchange="toggleAction(4)" class="w-5 h-5 rounded text-se-blue border-se-border focus:ring-se-blue cursor-pointer transition-all">
+                            </div>
+                            <h4 class="text-sm font-bold text-se-dark">Alinhamento Comercial no Sales Talk</h4>
+                            <p class="text-xs text-se-gray leading-relaxed">
+                                Pautar no comitê de vendas as diretrizes e os impactos das devoluções, reforçando a conformidade entre a Price Builder e a Ordem de Compra.
+                            </p>
+                        </div>
+                        <div class="flex justify-between items-center mt-4 pt-4 border-t border-slate-200">
+                            <div class="flex items-center gap-1.5 text-xs text-se-gray">
+                                <i data-lucide="user" class="w-4 h-4"></i>
+                                <span>Responsável: <strong class="text-se-dark">Líderes no Sales Talk</strong></span>
+                            </div>
+                            <span class="text-[10px] bg-amber-50 text-amber-700 px-2 py-0.5 rounded font-bold uppercase tracking-wider">Alinhamento</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- NOTIFICAÇÃO DE SUCESSO CUSTOMIZADA -->
+    <div id="toast" class="fixed bottom-5 right-5 bg-se-dark text-white text-xs px-4 py-3 rounded-xl border border-se-blue shadow-2xl flex items-center gap-2 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+        <i data-lucide="check-circle" class="w-4 h-4 text-se-success"></i>
+        <span id="toast-msg">Plano atualizado com sucesso!</span>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-white border-t border-se-border mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <p class="text-xs text-se-gray">&copy; 2026 SoftExpert Software. Todos os direitos reservados.</p>
+            <p class="text-xs font-semibold text-se-dark">
+                Material criado por <span class="text-se-blue font-bold">Michele Cezar | Sales Ops</span>
+            </p>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Dados Exatos e Reais da Planilha Jan-Maio/2026
+        const rawErrors = [
+            { id: 1, title: "Falta de Clareza de Cenário / Inconsistências Gerais", qty: 45, pct: "26,32%", desc: "SSOs abertos com duplicidade, falta de histórico de conversão, ou sem detalhar o cenário proposto vs. cenário atual do cliente.", class: "Crítico" },
+            { id: 2, title: "Campos Obrigatórios em Branco no Formulário SSO", qty: 30, pct: "17,54%", desc: "Omissão de checkboxes cruciais como SLA, Servidor de E-mail, Licenças, Cloud e recursos de vendas deixados vazios.", class: "Atenção" },
+            { id: 3, title: "Problemas Formais com a Proposta Comercial", qty: 20, pct: "11,70%", desc: "Dificuldades no acesso ao anexo comercial por falta de permissão de visualização ou uso de formato inadequado.", class: "Atenção" },
+            { id: 4, title: "Divergências entre Proposta e Price Builder / Ordem de Compra", qty: 15, pct: "8,77%", desc: "Valores finais, perfis de licenças ou quantidade de usuários conflitantes entre os documentos integradores.", class: "Atenção" },
+            { id: 5, title: "Ausência de Proposta Comercial ou Proposta em Branco", qty: 15, pct: "8,77%", desc: "Abertura de solicitações sem anexar o documento de oferta que dá sustentação jurídica e financeira ao faturamento.", class: "Atenção" },
+            { id: 6, title: "Falta de Concessão Comercial (Descontos / Parcelamentos)", qty: 12, pct: "7,02%", desc: "Aplicações de parcelamentos estendidos ou percentuais de desconto sem aprovação formal associada da respectiva alçada.", class: "Processual" },
+            { id: 7, title: "Falta de Cobrança da Taxa Administrativa (Downgrade)", qty: 8, pct: "4,68%", desc: "Processamento de reduções sem o lançamento da taxa administrativa de downgrade obrigatória pelo regimento interno.", class: "Processual" },
+            { id: 8, title: "Campo Downgrade não Preenchido ou Incorreto", qty: 8, pct: "4,68%", desc: "Incoerência nas caixas de faturamento de redução de escopo contratual ou faturamento retroativo incorreto.", class: "Atenção" },
+            { id: 9, title: "Falta de Aceite Formal do Cliente", qty: 5, pct: "2,92%", desc: "Falta da evidência de aceite formal ou assinatura que legalize a liberação dos serviços na SoftExpert.", class: "Compliance" },
+            { id: 10, title: "Solicitações Específicas do Gestor / Área Jurídica", qty: 5, pct: "2,92%", desc: "Ajustes de faturamento ou correções específicas requisitadas pela equipe de suporte processual ou jurídica da empresa.", class: "Compliance" },
+            { id: 11, title: "Erros de Precificação / Divergências em Cloud e Hosting", qty: 3, pct: "1,75%", desc: "Quantidades incorretas na ferramenta Price Builder inferiores à quantidade contratual mínima negociada.", class: "Financeiro" },
+            { id: 12, title: "Proposta com Status Incorreto (ex: 'Em Emissão')", qty: 3, pct: "1,75%", desc: "Enquadramento da proposta em status de rascunho ou emissão quando o correto seria homologado.", class: "Processual" },
+            { id: 13, title: "Divergências de Informações Diversas (Parceiro vs Cliente)", qty: 2, pct: "1,17%", desc: "Dúvidas no faturamento devido a múltiplos CNPJs ou preenchimento inconsistente de quem pagará.", class: "Financeiro" }
+        ];
+
+        // Estado do Plano de Ação
+        let checkedActions = { 1: false, 2: false, 3: false, 4: false };
+
+        window.onload = function() {
+            // Inicializar Lucide Icons
+            lucide.createIcons();
+            
+            // Renderizar Gráfico
+            renderChart();
+            
+            // Carregar os cards no Explorador
+            renderErrorCards(rawErrors);
+        }
+
+        // Troca de Abas
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('border-se-blue', 'text-se-blue', 'font-bold');
+                btn.classList.add('border-transparent', 'text-se-gray', 'font-medium');
+            });
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+
+            const activeBtn = document.getElementById(`tab-${tabId}`);
+            activeBtn.classList.remove('border-transparent', 'text-se-gray', 'font-medium');
+            activeBtn.classList.add('border-se-blue', 'text-se-blue', 'font-bold');
+
+            document.getElementById(`content-${tabId}`).classList.add('active');
+        }
+
+        // Renderizador do Gráfico de Pareto (Chart.js)
+        function renderChart() {
+            const ctx = document.getElementById('paretoChart').getContext('2d');
+            
+            // Ordenar por volume para Pareto verdadeiro
+            const sortedData = [...rawErrors].sort((a, b) => b.qty - a.qty);
+            const labels = sortedData.map(item => item.title.substring(0, 25) + '...');
+            const values = sortedData.map(item => item.qty);
+            
+            // Gerar porcentagem acumulada
+            const total = values.reduce((acc, curr) => acc + curr, 0);
+            let runningSum = 0;
+            const accumPct = values.map(val => {
+                runningSum += val;
+                return ((runningSum / total) * 100).toFixed(1);
+            });
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Quantidade de Ocorrências (Jan-Maio)',
+                            data: values,
+                            backgroundColor: '#0056B3',
+                            borderColor: '#004085',
+                            borderWidth: 1,
+                            borderRadius: 6,
+                            order: 2,
+                            yAxisID: 'y'
+                        },
+                        {
+                            label: '% Acumulada',
+                            data: accumPct,
+                            type: 'line',
+                            borderColor: '#F59E0B',
+                            backgroundColor: 'transparent',
+                            borderWidth: 2,
+                            pointBackgroundColor: '#F59E0B',
+                            tension: 0.1,
+                            order: 1,
+                            yAxisID: 'yAccum'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                font: {
+                                    family: 'Plus Jakarta Sans',
+                                    size: 10,
+                                    weight: '500'
+                                },
+                                color: '#1E293B'
+                            }
+                        },
+                        tooltip: {
+                            titleFont: { family: 'Plus Jakarta Sans', size: 11, weight: 'bold' },
+                            bodyFont: { family: 'Plus Jakarta Sans', size: 10 }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: { display: false },
+                            ticks: {
+                                color: '#64748B',
+                                font: { family: 'Plus Jakarta Sans', size: 8 }
+                            }
+                        },
+                        y: {
+                            type: 'linear',
+                            position: 'left',
+                            beginAtZero: true,
+                            ticks: {
+                                color: '#64748B',
+                                font: { family: 'Plus Jakarta Sans', size: 9 }
+                            },
+                            grid: { color: '#E2E8F0' }
+                        },
+                        yAccum: {
+                            type: 'linear',
+                            position: 'right',
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: {
+                                color: '#F59E0B',
+                                font: { family: 'Plus Jakarta Sans', size: 9 },
+                                callback: function(value) { return value + "%"; }
+                            },
+                            grid: { display: false }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Renderizador dos Cards de Inconsistências
+        function renderErrorCards(data) {
+            const grid = document.getElementById('errorGrid');
+            grid.innerHTML = '';
+            
+            if (data.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full text-center py-12 bg-white rounded-xl border border-dashed border-se-border">
+                        <i data-lucide="info" class="w-10 h-10 text-slate-300 mx-auto mb-3"></i>
+                        <p class="text-sm font-semibold text-se-dark">Nenhum erro encontrado</p>
+                        <p class="text-xs text-se-gray">Verifique a grafia ou utilize outras palavras chave.</p>
+                    </div>
+                `;
+                lucide.createIcons();
+                return;
+            }
+
+            data.forEach(item => {
+                const badgeColor = item.class === "Crítico" ? "bg-red-100 text-red-800" :
+                                   item.class === "Atenção" ? "bg-amber-100 text-amber-800" : "bg-blue-100 text-blue-800";
+                                   
+                const card = document.createElement('div');
+                card.className = "bg-white rounded-xl border border-se-border p-5 shadow-sm card-glow transition-all duration-300 flex flex-col justify-between";
+                card.innerHTML = `
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-start gap-2">
+                            <span class="text-[9px] font-bold px-2 py-0.5 rounded-full ${badgeColor} uppercase tracking-wider">${item.class}</span>
+                            <span class="text-sm font-black text-se-blue">${item.qty} un <span class="text-[10px] font-medium text-se-gray">(${item.pct})</span></span>
+                        </div>
+                        <h4 class="text-sm font-bold text-se-dark leading-snug">${item.title}</h4>
+                        <p class="text-xs text-se-gray leading-relaxed">${item.desc}</p>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-slate-100 flex justify-between items-center text-[10px] text-se-gray">
+                        <span class="font-semibold">Mapeamento Jan-Maio</span>
+                        <span class="bg-slate-100 text-slate-700 px-1.5 py-0.5 rounded font-mono">ID #${item.id}</span>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+            lucide.createIcons();
+        }
+
+        // Filtro em tempo real
+        function filterErrors() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = rawErrors.filter(item => 
+                item.title.toLowerCase().includes(query) || 
+                item.desc.toLowerCase().includes(query) || 
+                item.class.toLowerCase().includes(query)
+            );
+            renderErrorCards(filtered);
+        }
+
+        // Atualização do Plano de Ação Interativo
+        function toggleAction(id) {
+            checkedActions[id] = !checkedActions[id];
+            
+            const card = document.getElementById(`action-card-${id}`);
+            if (checkedActions[id]) {
+                card.classList.remove('bg-slate-50', 'border-slate-200');
+                card.classList.add('bg-emerald-50/55', 'border-emerald-300');
+            } else {
+                card.classList.remove('bg-emerald-50/55', 'border-emerald-300');
+                card.classList.add('bg-slate-50', 'border-slate-200');
+            }
+
+            // Calcular novas métricas de progresso
+            const checkedCount = Object.values(checkedActions).filter(val => val).length;
+            const pct = (checkedCount / 4) * 100;
+            
+            // Atualizar barra de progresso
+            document.getElementById('progressBar').style.width = `${pct}%`;
+            document.getElementById('progressText').innerText = `${checkedCount} / 4 (${pct}%)`;
+
+            // Toast de Feedback
+            showToast(`Plano de ação atualizado! Progresso: ${pct}%`);
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-msg').innerText = msg;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+            
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 2500);
+        }
+    </script>
+</body>
+</html>
